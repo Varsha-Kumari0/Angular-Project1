@@ -6,13 +6,17 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  styleUrls: ['./shopping-list.component.css'],
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[];
   private igChangeSub: Subscription;
 
-  constructor(private slService: ShoppingListService) { }
+  constructor(private slService: ShoppingListService) {}
+
+  onEditItem(index: number) {
+    this.slService.startedEditing.next(index);
+  }
 
   ngOnInit(): void {
     this.ingredients = this.slService.getIngredients();
@@ -24,6 +28,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.igChangeSub.unsubscribe();
+    this.igChangeSub.unsubscribe();
   }
 }
